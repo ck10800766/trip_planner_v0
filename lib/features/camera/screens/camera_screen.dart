@@ -86,7 +86,6 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
   double _currentZoom = 1;
   double _gestureStartZoom = 1;
   _CameraFrameMode _frameMode = _CameraFrameMode.native;
-  bool _isDesktopFallback = false;
 
   @override
   void initState() {
@@ -122,13 +121,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
 
   Future<void> _initializeCameras() async {
     try {
-      if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      if (!mounted) return;
-      setState(() {
-        _isDesktopFallback = true;
-      });
-      return;
-      }
+      if (kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux) return;
       final cameras = await availableCameras();
       if (!mounted) return;
 
