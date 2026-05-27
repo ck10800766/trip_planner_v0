@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -45,13 +48,15 @@ class HomeScreen extends StatelessWidget {
                 subtitle: 'Schedule your visits',
                 onTap: () => context.push('/calendar'),
               ),
-              const SizedBox(height: 12),
-              _HomeCard(
-                icon: Icons.camera_alt,
-                title: 'Anime Camera',
-                subtitle: 'AR photo overlay with reference',
-                onTap: () => context.push('/camera'),
-              ),
+              if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) ...[
+                const SizedBox(height: 12),
+                _HomeCard(
+                  icon: Icons.camera_alt,
+                  title: 'Anime Camera',
+                  subtitle: 'AR photo overlay with reference',
+                  onTap: () => context.push('/camera'),
+                ),
+              ],
               const SizedBox(height: 12),
               _HomeCard(
                 icon: Icons.confirmation_number,
